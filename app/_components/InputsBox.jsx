@@ -11,7 +11,7 @@ const InputsBox = ({
         <>
             <div className="w-full h-full rounded-tl-3xl bg-black/10 absolute inset-0 top-0"></div>
             <div className="w-[769px] min-h-[405px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-primary border-4 bg-white">
-                <div className="relative w-full h-full p-9 flex flex-col justify-center items-center">
+                <div className="relative w-full min-h-[405px] p-9 flex flex-col items-center">
                     <button
                         onClick={() => setOpenInputsBox(false)}
                         className="absolute inset-0 top-4 left-4 size-8 text-primary  rounded-full bg-secondary border-primary border-2 text-center "
@@ -21,9 +21,9 @@ const InputsBox = ({
                     <h3 className="text-3xl font-semibold text-primary inter">
                         {!!title && title}
                     </h3>
-                    <div className="w-full">
+                    <div className="w-full h-full">
                         <form
-                            action="w-full flex flex-col gap-4"
+                            className="flex flex-col gap-4 h-full justify-between w-full"
                             onSubmit={(e) => onSubmit(e)}
                         >
                             <div className="px-4">
@@ -32,6 +32,7 @@ const InputsBox = ({
                                         <input
                                             key={input.name}
                                             type={input.type}
+                                            accept={input.accept ?? ""}
                                             spellCheck="false"
                                             className="block my-4 outline-none bg-primary rounded-3xl w-full h-14 text-white text-xl px-4"
                                             placeholder={
@@ -62,11 +63,13 @@ const InputsBox = ({
                                     )
                                 )}
                             </div>
-                            <input
-                                type="submit"
-                                value={buttonName}
-                                className="float-right inline-block bg-primary cursor-pointer px-8 h-fit text-3xl text-white transition hover:scale-110 hover:shadow-xl focus:outline-none"
-                            />
+                            <div className="">
+                                <input
+                                    type="submit"
+                                    value={buttonName}
+                                    className="float-right inline-block bg-primary cursor-pointer px-8 h-fit w-fit text-3xl text-white transition hover:scale-110 hover:shadow-xl focus:outline-none"
+                                />
+                            </div>
                         </form>
                     </div>
                 </div>

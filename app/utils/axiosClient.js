@@ -1,7 +1,6 @@
 import { default as axios } from "axios"
 
-// const apikey = process.env.NEXT_PUBLIC_REST_API_KEY
-const apiUrl = "http://localhost:1337/api"
+const apiUrl = "http://127.0.0.1:8000/api"
 const axiosClient = axios.create({
     baseURL: apiUrl,
     // headers: {

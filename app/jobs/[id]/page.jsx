@@ -66,6 +66,42 @@ const page = ({ props }) => {
                                 />
                             </button>
                         </li>
+                        <li className="border-b-4 border-b-primary text-2xl font-semibold inter leading-6 p-2 flex items-center">
+                            <p className="">
+                                Providing comprehensive and advanced training
+                                courses in programming
+                            </p>
+                            <button
+                                className="transition hover:scale-110 "
+                                onClick={handleEdit}
+                            >
+                                <Image
+                                    src={edit.src}
+                                    alt="edit-icon"
+                                    width={30}
+                                    height={30}
+                                    className=""
+                                />
+                            </button>
+                        </li>
+                        <li className="border-b-4 border-b-primary text-2xl font-semibold inter leading-6 p-2 flex items-center">
+                            <p className="">
+                                Providing comprehensive and advanced training
+                                courses in programming
+                            </p>
+                            <button
+                                className="transition hover:scale-110 "
+                                onClick={handleEdit}
+                            >
+                                <Image
+                                    src={edit.src}
+                                    alt="edit-icon"
+                                    width={30}
+                                    height={30}
+                                    className=""
+                                />
+                            </button>
+                        </li>
                         <button className=" rounded-[30px] text-2xl font-semibold inter leading-6 p-3 text-black bg-primary transition hover:scale-110 hover:shadow-xl focus:outline-none absolute bottom-11 right-6 w-fit h-fit flex items-center gap-2 ">
                             <p>Add more</p>
                             <p className="size-7 rounded-full border-[3px] border-black">

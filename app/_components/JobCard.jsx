@@ -18,7 +18,7 @@ const JobCard = ({ logo, title, text, setOpenInputsBox }) => {
             </div>
             <p className="text-center font-semibold leading-6">{text}</p>
             <button
-                onClick={() => setOpenInputsBox(false)}
+                onClick={() => setOpenInputsBox(true)}
                 className="inline-block transition hover:scale-110 focus:outline-none"
             >
                 <Image

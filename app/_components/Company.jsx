@@ -9,6 +9,10 @@ import CompanyCustomer from "./CompanyCustomer"
 import CompanyEditProfile from "./CompanyEditProfile"
 import CompanyJobs from "./CompanyJobs"
 import CompanyCourses from "./CompanyCourses"
+import { useGetData } from "../utils/useQueries"
+import Cookies from "js-cookie"
+import calendarCheck from "/public/calendar-check.svg"
+import CompanySubscription from "./CompanySubscription"
 
 const tabss = {
     Jobs: {
@@ -62,6 +66,19 @@ const tabss = {
             />
         ),
         dashboard: <CompanyCustomer />,
+    },
+    Subscription: {
+        title: "Subscription",
+        icon: (
+            <Image
+                src={calendarCheck.src}
+                alt="calendar-check"
+                width={24}
+                height={24}
+                className="size-6 "
+            />
+        ),
+        dashboard: <CompanySubscription />,
     },
 }
 

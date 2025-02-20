@@ -38,7 +38,7 @@ const tabss = {
 const Admin = () => {
     const [currentTab, setCurrentTab] = useState(Object.values(tabss)[0])
     return (
-        <div className="h-[calc(100vh-93px)] flex gap-9">
+        <div className="h-[calc(100vh-93px)] w-full flex gap-9">
             <Sidebar
                 tabs={tabss}
                 setCurrentTab={setCurrentTab}

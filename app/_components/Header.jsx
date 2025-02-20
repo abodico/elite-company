@@ -1,26 +1,45 @@
 "use client"
 import { usePathname } from "next/navigation"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { BsPersonCircle } from "react-icons/bs"
 import { RiHomeFill } from "react-icons/ri"
+import Cookies from "js-cookie"
+import { usePostData, useGetData } from "../utils/useQueries"
 
 const Header = () => {
-    const [userType, setUserType] = useState("admin")
+    const [user, setUser] = useState("")
+    const { data } = useGetData(
+        (Cookies.get("user") === "customer" ? "/customer" : "/user") +
+            "/" +
+            Cookies.get("id"),
+        {
+            Authorization: `Bearer ${Cookies.get("access")}`,
+        }
+    )
+    useEffect(() => {
+        setUser(Cookies.get("user"))
+    }, [])
     const pathname = usePathname()
+
     if (pathname.endsWith("login") || pathname.endsWith("register"))
         return <></>
     return (
         <div className="bg-transparent flex justify-between pb-5,">
-            <h1 className="inknut-antiqua-regular text-white ml-3.5 text-4xl leading-[93px] ">
+            <a
+                href="/"
+                className="inknut-antiqua-regular text-white ml-3.5 text-4xl leading-[93px] "
+            >
                 ELITE company
-            </h1>
+            </a>
             <div className="flex items-center gap-6 mr-20">
-                {userType !== "company" ? (
+                {user !== "owner" ? (
                     <BsPersonCircle className="size-[60px] text-white" />
                 ) : (
                     <RiHomeFill className="size-6 text-white" />
                 )}
-                <p className="text-white inter font-semibold text-2xl">Admin</p>
+                <p className="text-white inter font-semibold text-2xl">
+                    {data?.data?.data?.name}
+                </p>
             </div>
         </div>
     )
