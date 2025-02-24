@@ -97,11 +97,9 @@ const CompanyCourses = () => {
                         (three, index) => (
                             <div key={index} className="">
                                 {three.map((item) => (
-                                    <Link
-                                        href={"/courses/" + item.id}
-                                        key={item.id}
-                                    >
+                                    <div key={item.id}>
                                         <SliderCard
+                                            id={item.id}
                                             title={item.title}
                                             text={
                                                 <p className="max-w-[75%] text-[22px] leading-6 font-semibold inter text-center">
@@ -116,7 +114,7 @@ const CompanyCourses = () => {
                                                 setJobId(item.id)
                                             }}
                                         />
-                                    </Link>
+                                    </div>
                                 ))}
                             </div>
                         )

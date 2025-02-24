@@ -19,12 +19,10 @@ const RegisterPage = () => {
         password_confirmation: "",
     })
     const [error, setError] = useState("")
-    const [customer, setCustomer] = useState(false)
+    // const [customer, setCustomer] = useState(false)
 
     const router = useRouter()
-    const { mutate } = usePostData(
-        (customer ? "/customer" : "/user") + "/register"
-    )
+    const { mutate } = usePostData("/customer/register")
 
     useEffect(() => {
         const timer = setTimeout(() => setError(""), 5000)
@@ -38,10 +36,10 @@ const RegisterPage = () => {
             {
                 onSuccess: (data) => {
                     Cookies.set("access", `${data?.data.authorization.token}`, {
-                        expires: 0.41,
+                        expires: 0.25,
                     })
                     Cookies.set("user", `${data?.data.type}`, {
-                        expires: 0.41,
+                        expires: 0.25,
                     })
                     Cookies.set(
                         "id",
@@ -51,7 +49,7 @@ const RegisterPage = () => {
                                 : data?.data.user.id
                         }`,
                         {
-                            expires: 0.41,
+                            expires: 0.25,
                         }
                     )
                     router.replace("/")

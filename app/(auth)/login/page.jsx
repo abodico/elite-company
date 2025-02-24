@@ -33,10 +33,10 @@ const LoginPage = () => {
             {
                 onSuccess: (data) => {
                     Cookies.set("access", `${data?.data.authorization.token}`, {
-                        expires: 0.41,
+                        expires: 0.25,
                     })
                     Cookies.set("user", `${data?.data.type}`, {
-                        expires: 0.41,
+                        expires: 0.25,
                     })
                     Cookies.set(
                         "id",
@@ -46,7 +46,7 @@ const LoginPage = () => {
                                 : data?.data.user.id
                         }`,
                         {
-                            expires: 0.41,
+                            expires: 0.25,
                         }
                     )
                     router.replace("/")
