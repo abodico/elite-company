@@ -4,8 +4,13 @@ import undo from "/public/undo-circle.svg"
 import video from "/public/video.png"
 import VideoCard from "../../_components/VideoCard"
 import Image from "next/image"
-const page = () => {
+import React from "react"
+import { useGetData } from "../../utils/useQueries"
+const page = ({ params }) => {
     const router = useRouter()
+    const unwrappedParams = React.use(params)
+    const { id } = unwrappedParams
+    const { data } = useGetData("/course/" + id)
 
     return (
         <div className=" dashboard h-[calc(100vh-93px)] w-full flex flex-col justify-start items-center relative">
@@ -27,41 +32,17 @@ const page = () => {
                 Advanced skills
             </h2>
             <div className="flex flex-col gap-4 max-h-[calc(100vh-175px)] overflow-auto">
-                <VideoCard
-                    img={video.src}
-                    title={"Project Management Essentials"}
-                    description={
-                        "Learn the principles of project management including planning, organizing and implementing in a professional manner"
-                    }
-                />
-                <VideoCard
-                    img={video.src}
-                    title={"Project Management Essentials"}
-                    description={
-                        "Learn the principles of project management including planning, organizing and implementing in a professional manner"
-                    }
-                />
-                <VideoCard
-                    img={video.src}
-                    title={"Project Management Essentials"}
-                    description={
-                        "Learn the principles of project management including planning, organizing and implementing in a professional manner"
-                    }
-                />
-                <VideoCard
-                    img={video.src}
-                    title={"Project Management Essentials"}
-                    description={
-                        "Learn the principles of project management including planning, organizing and implementing in a professional manner"
-                    }
-                />
-                <VideoCard
-                    img={video.src}
-                    title={"Project Management Essentials"}
-                    description={
-                        "Learn the principles of project management including planning, organizing and implementing in a professional manner"
-                    }
-                />
+                {data?.data?.data?.course?.attachements?.map((att) => (
+                    <React.Fragment key={att.id}>
+                        <VideoCard
+                            img={video.src}
+                            title={att.file_name}
+                            description={
+                                "Learn the principles of project management including planning, organizing and implementing in a professional manner"
+                            }
+                        />
+                    </React.Fragment>
+                ))}
             </div>
         </div>
     )

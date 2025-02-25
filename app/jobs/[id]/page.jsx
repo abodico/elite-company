@@ -1,12 +1,28 @@
 "use client"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import React from "react"
+import React, { useState } from "react"
 import logo from "/public/loginUser.svg"
 import edit from "/public/edit-1.svg"
 import undo from "/public/undo-circle.svg"
+import { useGetData, usePostData } from "../../utils/useQueries"
+import Cookies from "js-cookie"
 
-const page = ({ props }) => {
+const page = ({ params }) => {
+    const unwrappedParams = React.use(params)
+    const [openInputsBox, setOpenInputsBox] = useState(false)
+    const [deletedVideo, setDeletedVideo] = useState(0)
+    const { id } = unwrappedParams
+    const { data } = useGetData("/company/" + id + "/showjobs")
+    // const { mutate: deleteVideo } = usePostData(
+    //     `/course/${data?.data?.data[0]?.company_id}/video/${deletedVideo}/remove`,
+    //     {
+    //         Authorization: `Bearer ${Cookies.get("access")}`,
+    //     }
+    // )
+    const { mutate: addVideo } = usePostData("/course/" + id + "/addvideo", {
+        Authorization: `Bearer ${Cookies.get("access")}`,
+    })
     const router = useRouter()
     const handleEdit = () => {
         console.log("edited")

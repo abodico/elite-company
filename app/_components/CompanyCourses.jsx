@@ -37,7 +37,7 @@ const CompanyCourses = () => {
     const { data } = useGetData(
         "/company/" + Cookies.get("id") + "/showcourses"
     )
-
+    console.log(data)
     const { mutate: deleteCourse } = useDeleteData({
         Authorization: `Bearer ${Cookies.get("access")}`,
     })
@@ -93,7 +93,7 @@ const CompanyCourses = () => {
             </div>
             <div className="w-full h-[calc(100vh-260px)]">
                 <Slider {...settings}>
-                    {chunkArrayIntoThrees(data?.data?.data ?? []).map(
+                    {chunkArrayIntoThrees(data?.data?.data?.courses ?? []).map(
                         (three, index) => (
                             <div key={index} className="">
                                 {three.map((item) => (

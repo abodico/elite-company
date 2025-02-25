@@ -29,7 +29,6 @@ const page = ({ params }) => {
 
     const router = useRouter()
     const onDelete = (id) => {
-        console.log(id)
         setDeletedVideo(id)
         deleteVideo({})
     }
@@ -37,15 +36,10 @@ const page = ({ params }) => {
     const handleVideoUpload = (e) => {
         e.preventDefault()
         const video = e.target[0].files[0]
-        console.log(e.target[0].files[0])
         if (video) {
             const formData = new FormData()
             formData.append("file", video)
-            addVideo(formData, {
-                onSuccess: (data) => {
-                    console.log(data)
-                },
-            })
+            addVideo(formData)
         }
         setOpenInputsBox(false)
     }

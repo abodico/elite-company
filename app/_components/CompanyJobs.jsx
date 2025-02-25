@@ -74,7 +74,6 @@ const CompanyJobs = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
     }
-    console.log(chunkArrayIntoThrees(data?.data?.data ?? []))
     return (
         <div className="max-w-[calc(75%-36px)] w-full relative">
             <div className="flex justify-between items-center px-16 my-4">
@@ -90,12 +89,14 @@ const CompanyJobs = () => {
             </div>
             <div className=" w-full h-[calc(100vh-260px)]">
                 <Slider {...settings}>
-                    {chunkArrayIntoThrees(data?.data?.data ?? []).map(
+                    {chunkArrayIntoThrees(data?.data?.data?.jobs ?? []).map(
                         (three, index) => (
                             <div key={index} className="">
                                 {three.map((item) => (
                                     <div key={item.id}>
                                         <SliderCard
+                                            id={item.id}
+                                            job={true}
                                             title={item.title}
                                             text={
                                                 <p className="max-w-[75%] text-[22px] leading-6 font-semibold inter text-center">

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import check from "/public/check-circle.svg"
 import coin from "/public/coin.svg"
+import Link from "next/link"
 
 const CourseCard = ({
     logo,
@@ -8,11 +9,15 @@ const CourseCard = ({
     info,
     price,
     setOpenInputsBox,
+    id,
     taken = false,
 }) => {
     return (
         <div className="flex items-center gap-5 w-full">
-            <div className="bg-[#FAE4E2] w-full flex items-center justify-between gap-8 rounded-[30px] px-6 py-4">
+            <Link
+                href={"/course-videos/" + id}
+                className="bg-[#FAE4E2] w-full flex items-center justify-between gap-8 rounded-[30px] px-6 py-4"
+            >
                 <div className="flex flex-col items-center justify-center">
                     <Image
                         src={logo}
@@ -29,7 +34,7 @@ const CourseCard = ({
                 <p className="inter font-semibold text-center leading-6 ">
                     ${price}
                 </p>
-            </div>
+            </Link>
             {!taken ? (
                 <button
                     onClick={() => setOpenInputsBox(false)}

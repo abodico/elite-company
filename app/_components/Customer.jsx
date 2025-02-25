@@ -129,6 +129,7 @@ const Customer = () => {
                                     title={course.title}
                                     info={course.subtitles}
                                     price={course.price}
+                                    id={course.id}
                                     taken={false}
                                 />
                             </React.Fragment>
