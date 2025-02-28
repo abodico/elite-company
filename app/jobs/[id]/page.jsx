@@ -5,8 +5,16 @@ import React, { useState } from "react"
 import logo from "/public/loginUser.svg"
 import edit from "/public/edit-1.svg"
 import undo from "/public/undo-circle.svg"
-import { useGetData, usePostData } from "../../utils/useQueries"
+import { useDeleteData, useGetData, usePostData } from "../../utils/useQueries"
 import Cookies from "js-cookie"
+import InputsBox from "../../_components/InputsBox"
+import { RiDeleteBin6Line } from "react-icons/ri"
+
+const inputs = [
+    { type: "text", name: "Title" },
+    { type: "text", name: "Description" },
+    { type: "text", name: "Subscription Id" },
+]
 
 const page = ({ params }) => {
     const unwrappedParams = React.use(params)
@@ -14,18 +22,28 @@ const page = ({ params }) => {
     const [deletedVideo, setDeletedVideo] = useState(0)
     const { id } = unwrappedParams
     const { data } = useGetData("/company/" + id + "/showjobs")
-    // const { mutate: deleteVideo } = usePostData(
-    //     `/course/${data?.data?.data[0]?.company_id}/video/${deletedVideo}/remove`,
-    //     {
-    //         Authorization: `Bearer ${Cookies.get("access")}`,
-    //     }
-    // )
-    const { mutate: addVideo } = usePostData("/course/" + id + "/addvideo", {
+    const { mutate: deleteJob } = useDeleteData({
         Authorization: `Bearer ${Cookies.get("access")}`,
     })
+    const { mutate: addJob } = usePostData("/job", {
+        Authorization: `Bearer ${Cookies.get("access")}`,
+    })
+
     const router = useRouter()
-    const handleEdit = () => {
-        console.log("edited")
+    const onSubmit = (e) => {
+        e.preventDefault()
+        const data = {
+            title: e.target[0].value,
+            description: e.target[1].value,
+            company_id: Cookies.get("id"),
+            subscription_id: e.target[2].value,
+        }
+
+        addJob(data)
+        setOpenInputsBox(false)
+    }
+    const handleDelete = (id) => {
+        deleteJob("/job/" + id)
     }
     return (
         <div className="h-[calc(100vh-93px)] w-full flex ">
@@ -43,14 +61,14 @@ const page = ({ params }) => {
                     />
                 </button>
                 <h2 className="text-3xl inknut-antiqua-bold text-primary text-center leading-[82px]">
-                    Advanced skills
+                    {data?.data?.data["company name"]}
                 </h2>
                 <h3 className="text-3xl inknut-antiqua-regular text-primary text-center leading-[82px]">
                     Company
                 </h3>
                 <div className="size-[300px] bg-white rounded-[30px] mx-auto mt-24 flex justify-center items-center">
                     <Image
-                        src={logo.src}
+                        src={data?.data?.data?.logo[0]?.file_path ?? logo.src}
                         alt="logo"
                         width={182}
                         height={141}
@@ -64,61 +82,24 @@ const page = ({ params }) => {
                 </h2>
                 <div className="rounded-[30px] bg-secondary w-[672px] h-[417px] mx-auto relative ">
                     <ul className="w-full max-h-full overflow-auto ">
-                        <li className="border-b-4 border-b-primary text-2xl font-semibold inter leading-6 p-2 flex items-center">
-                            <p className="">
-                                Providing comprehensive and advanced training
-                                courses in programming
-                            </p>
-                            <button
-                                className="transition hover:scale-110 "
-                                onClick={handleEdit}
+                        {data?.data?.data?.jobs?.map((job) => (
+                            <li
+                                key={job.id}
+                                className="border-b-4 border-b-primary text-2xl font-semibold inter leading-6 p-2 flex justify-between items-center"
                             >
-                                <Image
-                                    src={edit.src}
-                                    alt="edit-icon"
-                                    width={30}
-                                    height={30}
-                                    className=""
-                                />
-                            </button>
-                        </li>
-                        <li className="border-b-4 border-b-primary text-2xl font-semibold inter leading-6 p-2 flex items-center">
-                            <p className="">
-                                Providing comprehensive and advanced training
-                                courses in programming
-                            </p>
-                            <button
-                                className="transition hover:scale-110 "
-                                onClick={handleEdit}
-                            >
-                                <Image
-                                    src={edit.src}
-                                    alt="edit-icon"
-                                    width={30}
-                                    height={30}
-                                    className=""
-                                />
-                            </button>
-                        </li>
-                        <li className="border-b-4 border-b-primary text-2xl font-semibold inter leading-6 p-2 flex items-center">
-                            <p className="">
-                                Providing comprehensive and advanced training
-                                courses in programming
-                            </p>
-                            <button
-                                className="transition hover:scale-110 "
-                                onClick={handleEdit}
-                            >
-                                <Image
-                                    src={edit.src}
-                                    alt="edit-icon"
-                                    width={30}
-                                    height={30}
-                                    className=""
-                                />
-                            </button>
-                        </li>
-                        <button className=" rounded-[30px] text-2xl font-semibold inter leading-6 p-3 text-black bg-primary transition hover:scale-110 hover:shadow-xl focus:outline-none absolute bottom-11 right-6 w-fit h-fit flex items-center gap-2 ">
+                                <p className="">{job.title}</p>
+                                <button
+                                    onClick={() => handleDelete(job.id)}
+                                    className="inline-block transition hover:scale-110 focus:outline-none"
+                                >
+                                    <RiDeleteBin6Line className="size-8 rounded-full " />
+                                </button>
+                            </li>
+                        ))}
+                        <button
+                            onClick={() => setOpenInputsBox(true)}
+                            className=" rounded-[30px] text-2xl font-semibold inter leading-6 p-3 text-black bg-primary transition hover:scale-110 hover:shadow-xl focus:outline-none absolute bottom-11 right-6 w-fit h-fit flex items-center gap-2 "
+                        >
                             <p>Add more</p>
                             <p className="size-7 rounded-full border-[3px] border-black">
                                 +
@@ -127,6 +108,14 @@ const page = ({ params }) => {
                     </ul>
                 </div>
             </div>
+            {openInputsBox && (
+                <InputsBox
+                    buttonName={"Add"}
+                    onSubmit={(e) => onSubmit(e)}
+                    setOpenInputsBox={setOpenInputsBox}
+                    inputs={inputs}
+                />
+            )}
         </div>
     )
 }

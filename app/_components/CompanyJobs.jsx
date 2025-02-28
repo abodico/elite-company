@@ -95,7 +95,7 @@ const CompanyJobs = () => {
                                 {three.map((item) => (
                                     <div key={item.id}>
                                         <SliderCard
-                                            id={item.id}
+                                            id={Cookies.get("id")}
                                             job={true}
                                             title={item.title}
                                             text={

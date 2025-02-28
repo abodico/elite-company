@@ -18,7 +18,7 @@ const page = ({ params }) => {
     const { id } = unwrappedParams
     const { data } = useGetData("/course/" + id)
     const { mutate: deleteVideo } = usePostData(
-        `/course/${data?.data?.data[0]?.company_id}/video/${deletedVideo}/remove`,
+        `/course/${data?.data?.data?.course?.company_id}/video/${deletedVideo}/remove`,
         {
             Authorization: `Bearer ${Cookies.get("access")}`,
         }
@@ -83,25 +83,27 @@ const page = ({ params }) => {
                             <td className=""></td>
                         </tr>
                     </thead>
-                    <tbody className=" bg-secondary h-[417px] flex flex-column w-[672px]">
-                        {data?.data?.data?.[0]?.attachements?.map((video) => (
-                            <tr
-                                key={video.id}
-                                className="h-[89px] w-full flex items-center justify-between border-b-4  border-b-primary text-2xl font-semibold inter leading-6 p-2"
-                            >
-                                <td className="rounded-tl-[30px] pl-4 text-ellipsis overflow-hidden">
-                                    {video.file_name}
-                                </td>
-                                <td className="rounded-tr-[30px]">
-                                    <button
-                                        onClick={() => onDelete(video.id)}
-                                        className="inline-block transition hover:scale-110 focus:outline-none"
-                                    >
-                                        <RiDeleteBin6Line className="size-8 rounded-full " />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                    <tbody className=" bg-secondary h-[417px] flex flex-col w-[672px]">
+                        {data?.data?.data?.course?.attachements?.map(
+                            (video) => (
+                                <tr
+                                    key={video.id}
+                                    className="h-[89px] w-full flex items-center justify-between border-b-4  border-b-primary text-2xl font-semibold inter leading-6 p-2"
+                                >
+                                    <td className="rounded-tl-[30px] pl-4 text-ellipsis overflow-hidden">
+                                        {video.file_name}
+                                    </td>
+                                    <td className="rounded-tr-[30px]">
+                                        <button
+                                            onClick={() => onDelete(video.id)}
+                                            className="inline-block transition hover:scale-110 focus:outline-none"
+                                        >
+                                            <RiDeleteBin6Line className="size-8 rounded-full " />
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        )}
                     </tbody>
                 </table>
                 {/* add button */}
